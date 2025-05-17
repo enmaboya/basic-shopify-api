@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="false"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="true"
-         syntaxCheck="true"
+    colors="true"
+    processIsolation="false"
+    stopOnFailure="true"
+    bootstrap="./vendor/autoload.php"
 >
-    <logging>
-        <log type="coverage-clover" target="build/logs/clover.xml"/>
-        <log type="coverage-text" target="php://stdout"/>
-    </logging>
     <testsuites>
         <testsuite name="BasicShopifyAPI Test Suite">
             <directory>./test/</directory>
+            <exclude>./test/BaseTest.php</exclude>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist>
-            <directory>./src/</directory>
-        </whitelist>
-    </filter>
 </phpunit>
