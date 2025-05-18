@@ -2,9 +2,7 @@
 
 namespace Gnikyt\BasicShopifyAPI\Middleware;
 
-use Exception;
-use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
-use Gnikyt\BasicShopifyAPI\Options;
+use Gnikyt\BasicShopifyAPI\{BasicShopifyAPI, Options};
 use Gnikyt\BasicShopifyAPI\Traits\IsRequestType;
 use Psr\Http\Message\RequestInterface;
 
@@ -19,12 +17,8 @@ class AuthRequest extends AbstractMiddleware
     /**
      * Run.
      *
-     * @param callable $handler
-     *
-     * @throws Exception For missing API key or password for private apps.
-     * @throws Exception For missing access token on GraphQL calls.
-     *
-     * @return callable
+     * @throws \Exception for missing API key or password for private apps
+     * @throws \Exception for missing access token on GraphQL calls
      */
     public function __invoke(callable $handler): callable
     {
@@ -43,14 +37,14 @@ class AuthRequest extends AbstractMiddleware
                     // Checks for REST
                     if ($isPrivate && ($apiKey === null || $apiPassword === null)) {
                         // Key and password are required for private API calls
-                        throw new Exception('API key and password required for private Shopify REST calls');
+                        throw new \Exception('API key and password required for private Shopify REST calls');
                     }
 
                     if ($isPrivate) {
                         // Private: Add auth for REST calls, add the basic auth header
                         $request = $request->withHeader(
                             'Authorization',
-                            'Basic '.base64_encode("{$apiKey}:{$apiPassword}")
+                            'Basic ' . base64_encode("{$apiKey}:{$apiPassword}")
                         );
                     } else {
                         // Public: Add the token header
@@ -60,10 +54,10 @@ class AuthRequest extends AbstractMiddleware
                     // Checks for Graph
                     if ($isPrivate && ($apiPassword === null && $accessToken === null)) {
                         // Private apps need password for use as access token
-                        throw new Exception('API password/access token required for private Shopify GraphQL calls');
+                        throw new \Exception('API password/access token required for private Shopify GraphQL calls');
                     } elseif (!$isPrivate && $accessToken === null) {
                         // Need access token for public calls
-                        throw new Exception('Access token required for public Shopify GraphQL calls');
+                        throw new \Exception('Access token required for public Shopify GraphQL calls');
                     }
 
                     // Public/Private: Add the token header
@@ -89,9 +83,7 @@ class AuthRequest extends AbstractMiddleware
     /**
      * Determines if the request requires auth headers.
      *
-     * @param string $uri The request URI.
-     *
-     * @return bool
+     * @param string $uri the request URI
      */
     protected function isAuthableRequest(string $uri): bool
     {
@@ -101,17 +93,15 @@ class AuthRequest extends AbstractMiddleware
     /**
      * Versions the API call with the set version.
      *
-     * @param string $uri The request URI.
-     *
-     * @return string
+     * @param string $uri the request URI
      */
     protected function versionPath(string $uri): string
     {
         $version = $this->api->getOptions()->getVersion();
-        if ($version === null ||
-            preg_match(Options::VERSION_PATTERN, $uri) ||
-            !$this->isAuthableRequest($uri) ||
-            !$this->isVersionableRequest($uri)
+        if ($version === null
+            || preg_match(Options::VERSION_PATTERN, $uri)
+            || !$this->isAuthableRequest($uri)
+            || !$this->isVersionableRequest($uri)
         ) {
             // No version set, or already versioned... nothing to do
             return $uri;
@@ -129,9 +119,7 @@ class AuthRequest extends AbstractMiddleware
     /**
      * Determines if the request requires versioning.
      *
-     * @param string $uri The request URI.
-     *
-     * @return bool
+     * @param string $uri the request URI
      */
     protected function isVersionableRequest(string $uri): bool
     {

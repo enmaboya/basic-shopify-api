@@ -18,17 +18,11 @@ class Memory implements StateStorage
      */
     protected $container = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function all(): array
     {
         return $this->container;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get(Session $session): array
     {
         $shop = $session->getShop();
@@ -36,17 +30,11 @@ class Memory implements StateStorage
         return $this->container[$shop] ?? [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set(array $values, Session $session): void
     {
         $this->container[$session->getShop()] = $values;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function push($value, Session $session): void
     {
         $shop = $session->getShop();
@@ -57,9 +45,6 @@ class Memory implements StateStorage
         array_unshift($this->container[$shop], $value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reset(Session $session): void
     {
         $this->container[$session->getShop()] = [];

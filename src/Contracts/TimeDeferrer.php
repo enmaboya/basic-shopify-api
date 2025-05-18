@@ -10,17 +10,11 @@ interface TimeDeferrer
 {
     /**
      * Get the current timestamp with microseconds.
-     *
-     * @return float
      */
     public function getCurrentTime(): float;
 
     /**
      * Sleep for a number of microseconds.
-     *
-     * @param float $microseconds
-     *
-     * @return void
      */
     public function sleep(float $microseconds): void;
 }

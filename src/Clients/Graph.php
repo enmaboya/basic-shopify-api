@@ -12,10 +12,8 @@ use Psr\Http\Message\ResponseInterface;
 class Graph extends AbstractClient implements GraphRequester
 {
     /**
-     * {@inheritdoc}
-     *
-     * @throws \Exception When missing api password is missing for private apps.
-     * @throws \Exception When missing access key is missing for public apps.
+     * @throws \Exception when missing api password is missing for private apps
+     * @throws \Exception when missing access key is missing for public apps
      */
     public function request(string $query, array $variables = [], bool $sync = true)
     {
@@ -61,10 +59,6 @@ class Graph extends AbstractClient implements GraphRequester
 
     /**
      * Handle response from request.
-     *
-     * @param ResponseInterface $resp
-     *
-     * @return array
      */
     public function handleSuccess(ResponseInterface $resp): array
     {
@@ -83,10 +77,6 @@ class Graph extends AbstractClient implements GraphRequester
 
     /**
      * Handle failure of response.
-     *
-     * @param RequestException $e
-     *
-     * @return array
      */
     public function handleFailure(RequestException $e): array
     {

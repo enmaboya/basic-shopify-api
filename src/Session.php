@@ -31,9 +31,9 @@ class Session
     /**
      * Setup a session.
      *
-     * @param string              $shop        The shop domain.
-     * @param string|null         $accessToken The access token for the shop.
-     * @param ResponseAccess|null $user        The user for per-user.
+     * @param string              $shop        the shop domain
+     * @param string|null         $accessToken the access token for the shop
+     * @param ResponseAccess|null $user        the user for per-user
      *
      * @return self
      */
@@ -46,8 +46,6 @@ class Session
 
     /**
      * Gets the access token.
-     *
-     * @return string|null
      */
     public function getAccessToken(): ?string
     {
@@ -56,8 +54,6 @@ class Session
 
     /**
      * Gets the Shopify domain (*.myshopify.com) we're working with.
-     *
-     * @return string|null
      */
     public function getShop(): ?string
     {
@@ -66,8 +62,6 @@ class Session
 
     /**
      * Gets the user.
-     *
-     * @return ResponseAccess|null
      */
     public function getUser(): ?ResponseAccess
     {
@@ -76,8 +70,6 @@ class Session
 
     /**
      * Checks if we have a user.
-     *
-     * @return bool
      */
     public function hasUser(): bool
     {

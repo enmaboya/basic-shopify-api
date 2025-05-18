@@ -3,25 +3,13 @@
 namespace Gnikyt\BasicShopifyAPI;
 
 use Closure;
-use Exception;
-use Gnikyt\BasicShopifyAPI\Clients\Graph;
-use Gnikyt\BasicShopifyAPI\Clients\Rest;
-use Gnikyt\BasicShopifyAPI\Contracts\ClientAware;
-use Gnikyt\BasicShopifyAPI\Contracts\GraphRequester;
-use Gnikyt\BasicShopifyAPI\Contracts\RestRequester;
-use Gnikyt\BasicShopifyAPI\Contracts\SessionAware;
-use Gnikyt\BasicShopifyAPI\Contracts\StateStorage;
-use Gnikyt\BasicShopifyAPI\Contracts\TimeDeferrer;
+use Gnikyt\BasicShopifyAPI\Clients\{Graph, Rest};
+use Gnikyt\BasicShopifyAPI\Contracts\{ClientAware, GraphRequester, RestRequester, SessionAware, StateStorage, TimeDeferrer};
 use Gnikyt\BasicShopifyAPI\Deferrers\Sleep;
-use Gnikyt\BasicShopifyAPI\Middleware\AuthRequest;
-use Gnikyt\BasicShopifyAPI\Middleware\RateLimiting;
-use Gnikyt\BasicShopifyAPI\Middleware\UpdateApiLimits;
-use Gnikyt\BasicShopifyAPI\Middleware\UpdateRequestTime;
+use Gnikyt\BasicShopifyAPI\Middleware\{AuthRequest, RateLimiting, UpdateApiLimits, UpdateRequestTime};
 use Gnikyt\BasicShopifyAPI\Store\Memory;
 use Gnikyt\BasicShopifyAPI\Traits\ResponseTransform;
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\HandlerStack;
+use GuzzleHttp\{Client, ClientInterface, HandlerStack};
 use GuzzleHttp\Promise\Promise;
 use GuzzleRetry\GuzzleRetryMiddleware;
 
@@ -99,10 +87,10 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Constructor.
      *
-     * @param Options           $options   The options for the library setup.
-     * @param StateStorage|null $tstore    The time storer implementation to use for rate limiting.
-     * @param StateStorage|null $lstore    The limits storer implementation to use for rate limiting.
-     * @param TimeDeferrer|null $tdeferrer The time deferrer implementation to use for rate limiting.
+     * @param Options           $options   the options for the library setup
+     * @param StateStorage|null $tstore    the time storer implementation to use for rate limiting
+     * @param StateStorage|null $lstore    the limits storer implementation to use for rate limiting
+     * @param TimeDeferrer|null $tdeferrer the time deferrer implementation to use for rate limiting
      *
      * @return self
      */
@@ -138,9 +126,6 @@ class BasicShopifyAPI implements SessionAware, ClientAware
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setClient(ClientInterface $client): void
     {
         $this->client = $client;
@@ -148,17 +133,11 @@ class BasicShopifyAPI implements SessionAware, ClientAware
         $this->getRestClient()->setClient($this->client);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClient(): ClientInterface
     {
         return $this->client;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setOptions(Options $options): void
     {
         $this->options = $options;
@@ -166,9 +145,6 @@ class BasicShopifyAPI implements SessionAware, ClientAware
         $this->getRestClient()->setOptions($this->options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOptions(): Options
     {
         return $this->options;
@@ -177,9 +153,7 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Sets the GraphQL request client.
      *
-     * @param GraphRequester $client The client for GraphQL.
-     *
-     * @return self
+     * @param GraphRequester $client the client for GraphQL
      */
     public function setGraphClient(GraphRequester $client): self
     {
@@ -190,8 +164,6 @@ class BasicShopifyAPI implements SessionAware, ClientAware
 
     /**
      * Get the GraphQL client.
-     *
-     * @return GraphRequester
      */
     public function getGraphClient(): GraphRequester
     {
@@ -201,9 +173,7 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Sets the REST request client.
      *
-     * @param RestRequester $client The client for REST.
-     *
-     * @return self
+     * @param RestRequester $client the client for REST
      */
     public function setRestClient(RestRequester $client): self
     {
@@ -214,17 +184,12 @@ class BasicShopifyAPI implements SessionAware, ClientAware
 
     /**
      * Get the REST client.
-     *
-     * @return RestRequester
      */
     public function getRestClient(): RestRequester
     {
         return $this->restClient;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setSession(Session $session): void
     {
         $this->session = $session;
@@ -232,9 +197,6 @@ class BasicShopifyAPI implements SessionAware, ClientAware
         $this->getRestClient()->setSession($this->session);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSession(): ?Session
     {
         return $this->session;
@@ -243,13 +205,11 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Accepts a closure to do isolated API calls for a shop.
      *
-     * @param Session $session The shop/user session.
+     * @param Session $session the shop/user session
      *
-     * @throws Exception When closure is missing or not callable.
-     *
-     * @return mixed
+     * @throws \Exception when closure is missing or not callable
      */
-    public function withSession(Session $session, Closure $closure)
+    public function withSession(Session $session, \Closure $closure)
     {
         // Clone the API class and bind it to the closure
         $clonedApi = clone $this;
@@ -261,10 +221,8 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Add middleware to the handler stack.
      *
-     * @param callable $callable Middleware function.
-     * @param string   $name     Name to register for this middleware.
-     *
-     * @return self
+     * @param callable $callable middleware function
+     * @param string   $name     name to register for this middleware
      */
     public function addMiddleware(callable $callable, string $name = ''): self
     {
@@ -276,9 +234,7 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Remove middleware to the handler stack.
      *
-     * @param string $name Name to register for this middleware.
-     *
-     * @return self
+     * @param string $name name to register for this middleware
      */
     public function removeMiddleware(string $name = ''): self
     {
@@ -306,9 +262,7 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Gets the access token from a "code" supplied by Shopify request after successfull auth (for public apps).
      *
-     * @param string $code The code from Shopify.
-     *
-     * @return string
+     * @param string $code the code from Shopify
      */
     public function requestAccessToken(string $code): string
     {
@@ -318,9 +272,7 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Gets the access object from a "code" and sets it to the instance (for public apps).
      *
-     * @param string $code The code from Shopify.
-     *
-     * @return void
+     * @param string $code the code from Shopify
      */
     public function requestAndSetAccess(string $code): void
     {
@@ -351,15 +303,14 @@ class BasicShopifyAPI implements SessionAware, ClientAware
      *
      * @param array $params The request parameters (ex. $_GET).
      *
-     * @throws Exception For missing API secret.
-     *
-     * @return bool If the HMAC is validated.
+     * @return bool if the HMAC is validated
+     * @throws \Exception for missing API secret
      */
     public function verifyRequest(array $params): bool
     {
         if ($this->getOptions()->getApiSecret() === null) {
             // Secret is required
-            throw new Exception('API secret is missing');
+            throw new \Exception('API secret is missing');
         }
 
         // Ensure shop, timestamp, and HMAC are in the params
@@ -374,10 +325,10 @@ class BasicShopifyAPI implements SessionAware, ClientAware
             // Convert array values in the params to a string
             foreach ($params as &$value) {
                 if (is_array($value)) {
-                    $value = '["'.implode('", "', $value).'"]';
+                    $value = '["' . implode('", "', $value) . '"]';
                 }
             }
-            
+
             ksort($params);
 
             // Encode and hash the params (without HMAC), add the API secret, and compare to the HMAC from params
@@ -395,7 +346,7 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Alias for REST method for backwards compatibility.
      *
-     * @see rest
+     * @see Rest
      */
     public function request()
     {
@@ -416,7 +367,7 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Runs a request to the Shopify API (async).
      *
-     * @see graph
+     * @see Graph
      */
     public function graphAsync(string $query, array $variables = []): Promise
     {
@@ -435,7 +386,7 @@ class BasicShopifyAPI implements SessionAware, ClientAware
      * Runs a request to the Shopify API (async).
      * Alias for `rest` with `sync` param set to `false`.
      *
-     * @see rest
+     * @see Rest
      */
     public function restAsync(string $type, string $path, ?array $params = null, array $headers = []): Promise
     {
@@ -445,11 +396,9 @@ class BasicShopifyAPI implements SessionAware, ClientAware
     /**
      * Setup the REST and GraphQL clients.
      *
-     * @param StateStorage|null $tstore    The time storer implementation to use for rate limiting.
-     * @param StateStorage|null $lstore    The limits storer implementation to use for rate limiting.
-     * @param TimeDeferrer|null $tdeferrer The time deferrer implementation to use for rate limiting.
-     *
-     * @return void
+     * @param StateStorage|null $tstore    the time storer implementation to use for rate limiting
+     * @param StateStorage|null $lstore    the limits storer implementation to use for rate limiting
+     * @param TimeDeferrer|null $tdeferrer the time deferrer implementation to use for rate limiting
      */
     protected function setupClients(
         ?StateStorage $tstore = null,

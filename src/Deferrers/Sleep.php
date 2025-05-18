@@ -10,17 +10,11 @@ use Gnikyt\BasicShopifyAPI\Contracts\TimeDeferrer;
  */
 class Sleep implements TimeDeferrer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrentTime(): float
     {
         return microtime(true) * 1000000;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function sleep(float $microseconds): void
     {
         usleep((int) $microseconds);

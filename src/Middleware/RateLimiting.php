@@ -15,10 +15,6 @@ class RateLimiting extends AbstractMiddleware
 
     /**
      * Run.
-     *
-     * @param callable $handler
-     *
-     * @return callable
      */
     public function __invoke(callable $handler): callable
     {
@@ -37,10 +33,6 @@ class RateLimiting extends AbstractMiddleware
 
     /**
      * Handle REST checks.
-     *
-     * @param BasicShopifyAPI $api
-     *
-     * @return bool
      */
     protected function handleRest(BasicShopifyAPI $api): bool
     {
@@ -76,10 +68,6 @@ class RateLimiting extends AbstractMiddleware
 
     /**
      * Handle GraphQL checks.
-     *
-     * @param BasicShopifyAPI $api
-     *
-     * @return bool
      */
     protected function handleGraph(BasicShopifyAPI $api): bool
     {

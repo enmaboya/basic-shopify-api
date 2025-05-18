@@ -2,11 +2,9 @@
 
 namespace Gnikyt\BasicShopifyAPI\Clients;
 
-use Exception;
 use Gnikyt\BasicShopifyAPI\Contracts\RestRequester;
 use Gnikyt\BasicShopifyAPI\ResponseAccess;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\{ClientException, RequestException};
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -16,8 +14,6 @@ class Rest extends AbstractClient implements RestRequester
 {
     /**
      * Processes the "Link" header.
-     *
-     * @return ResponseAccess
      */
     protected function extractLinkHeader(string $header): ResponseAccess
     {
@@ -35,14 +31,11 @@ class Rest extends AbstractClient implements RestRequester
         return new ResponseAccess($links);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function requestAccess(string $code): ResponseAccess
     {
         if ($this->getOptions()->getApiSecret() === null || $this->getOptions()->getApiKey() === null) {
             // Key and secret required
-            throw new Exception('API key or secret is missing');
+            throw new \Exception('API key or secret is missing');
         }
 
         // Do a JSON POST request to grab the access token
@@ -64,19 +57,16 @@ class Rest extends AbstractClient implements RestRequester
         } catch (ClientException $e) {
             $body = json_decode($e->getResponse()->getBody()->getContents());
 
-            throw new Exception($body->error_description);
+            throw new \Exception($body->error_description);
         }
 
         return $this->toResponse($response->getBody());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAuthUrl($scopes, string $redirectUri, string $mode = 'offline'): string
     {
         if ($this->getOptions()->getApiKey() === null) {
-            throw new Exception('API key is missing');
+            throw new \Exception('API key is missing');
         }
 
         if (is_array($scopes)) {
@@ -100,9 +90,6 @@ class Rest extends AbstractClient implements RestRequester
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function request(string $type, string $path, ?array $params = null, array $headers = [], bool $sync = true)
     {
         // Build URI
@@ -112,7 +99,7 @@ class Rest extends AbstractClient implements RestRequester
         $guzzleParams = [];
         if ($params !== null) {
             $keys = array_keys($params);
-            if (isset($keys[0]) && in_array($keys[0], ['query', 'json'])) {
+            if (isset($keys[0]) && in_array($keys[0], ['query', 'json'], true)) {
                 // Inputted type
                 $guzzleParams = $params;
             } else {
@@ -152,10 +139,6 @@ class Rest extends AbstractClient implements RestRequester
 
     /**
      * Handle success of response.
-     *
-     * @param ResponseInterface $resp
-     *
-     * @return array
      */
     public function handleSuccess(ResponseInterface $resp): array
     {
@@ -178,10 +161,6 @@ class Rest extends AbstractClient implements RestRequester
 
     /**
      * Handle failure of response.
-     *
-     * @param RequestException $e
-     *
-     * @return array
      */
     public function handleFailure(RequestException $e): array
     {

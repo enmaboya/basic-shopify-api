@@ -2,8 +2,6 @@
 
 namespace Gnikyt\BasicShopifyAPI;
 
-use Exception;
-
 /**
  * Options for the library.
  */
@@ -98,9 +96,7 @@ class Options
     /**
      * Set type for API calls.
      *
-     * @param bool $private True for private, false for public.
-     *
-     * @return self
+     * @param bool $private true for private, false for public
      */
     public function setType(bool $private): self
     {
@@ -111,8 +107,6 @@ class Options
 
     /**
      * Get the type for API calls.
-     *
-     * @return bool
      */
     public function getType(): bool
     {
@@ -121,8 +115,6 @@ class Options
 
     /**
      * Determines if the calls are private.
-     *
-     * @return bool
      */
     public function isPrivate(): bool
     {
@@ -131,8 +123,6 @@ class Options
 
     /**
      * Determines if the calls are public.
-     *
-     * @return bool
      */
     public function isPublic(): bool
     {
@@ -142,9 +132,7 @@ class Options
     /**
      * Sets the API key for use with the Shopify API (public or private apps).
      *
-     * @param string $apiKey The API key.
-     *
-     * @return self
+     * @param string $apiKey the API key
      */
     public function setApiKey(string $apiKey): self
     {
@@ -155,8 +143,6 @@ class Options
 
     /**
      * Get the API key.
-     *
-     * @return string|null
      */
     public function getApiKey(): ?string
     {
@@ -166,9 +152,7 @@ class Options
     /**
      * Sets the API secret for use with the Shopify API (public apps).
      *
-     * @param string $apiSecret The API secret key.
-     *
-     * @return self
+     * @param string $apiSecret the API secret key
      */
     public function setApiSecret(string $apiSecret): self
     {
@@ -179,8 +163,6 @@ class Options
 
     /**
      * Get the API secret.
-     *
-     * @return string|null
      */
     public function getApiSecret(): ?string
     {
@@ -190,9 +172,7 @@ class Options
     /**
      * Sets the API password for use with the Shopify API (private apps).
      *
-     * @param string $apiPassword The API password.
-     *
-     * @return self
+     * @param string $apiPassword the API password
      */
     public function setApiPassword(string $apiPassword): self
     {
@@ -203,8 +183,6 @@ class Options
 
     /**
      * Get API password.
-     *
-     * @return string|null
      */
     public function getApiPassword(): ?string
     {
@@ -213,10 +191,6 @@ class Options
 
     /**
      * Set the REST limit.
-     *
-     * @param int $limit
-     *
-     * @return self
      */
     public function setRestLimit(int $limit): self
     {
@@ -227,8 +201,6 @@ class Options
 
     /**
      * Get the REST limit.
-     *
-     * @return int
      */
     public function getRestLimit(): int
     {
@@ -237,10 +209,6 @@ class Options
 
     /**
      * Set the GraphQL limit.
-     *
-     * @param int $limit
-     *
-     * @return self
      */
     public function setGraphLimit(int $limit): self
     {
@@ -251,8 +219,6 @@ class Options
 
     /**
      * Get the GraphQL limit.
-     *
-     * @return int
      */
     public function getGraphLimit(): int
     {
@@ -261,10 +227,6 @@ class Options
 
     /**
      * Set options for Guzzle.
-     *
-     * @param array $options
-     *
-     * @return self
      */
     public function setGuzzleOptions(array $options): self
     {
@@ -275,8 +237,6 @@ class Options
 
     /**
      * Get options for Guzzle.
-     *
-     * @return array
      */
     public function getGuzzleOptions(): array
     {
@@ -285,10 +245,6 @@ class Options
 
     /**
      * Set a Guzzle handler.
-     *
-     * @param callable $handler
-     *
-     * @return self
      */
     public function setGuzzleHandler(callable $handler): self
     {
@@ -299,8 +255,6 @@ class Options
 
     /**
      * Get the Guzzle handler.
-     *
-     * @return callable|null
      */
     public function getGuzzleHandler(): ?callable
     {
@@ -310,17 +264,15 @@ class Options
     /**
      * Sets the version of Shopify API to use.
      *
-     * @param string $version The API version.
+     * @param string $version the API version
      *
-     * @throws Exception if version does not match.
-     *
-     * @return self
+     * @throws \Exception if version does not match
      */
     public function setVersion(string $version): self
     {
         if (!preg_match(self::VERSION_PATTERN, $version)) {
             // Invalid version string
-            throw new Exception('Version string must be of YYYY-MM or unstable');
+            throw new \Exception('Version string must be of YYYY-MM or unstable');
         }
 
         $this->version = $version;
@@ -330,8 +282,6 @@ class Options
 
     /**
      * Returns the current in-use API version.
-     *
-     * @return string|null
      */
     public function getVersion(): ?string
     {
@@ -340,8 +290,6 @@ class Options
 
     /**
      * Enable built-in rate limiting.
-     *
-     * @return self
      */
     public function enableRateLimiting(): self
     {
@@ -352,8 +300,6 @@ class Options
 
     /**
      * Disable built-in rate limiting.
-     *
-     * @return self
      */
     public function disableRateLimiting(): self
     {
@@ -364,8 +310,6 @@ class Options
 
     /**
      * Is built-in rate limiting enabled?
-     *
-     * @return bool
      */
     public function isRateLimitingEnabled(): bool
     {

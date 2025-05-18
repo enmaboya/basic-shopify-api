@@ -16,7 +16,7 @@ abstract class AbstractMiddleware
     /**
      * Setup.
      *
-     * @param BasicShopifyAPI $api The API instance.
+     * @param BasicShopifyAPI $api the API instance
      *
      * @return self
      */

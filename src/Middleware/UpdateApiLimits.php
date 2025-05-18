@@ -3,10 +3,8 @@
 namespace Gnikyt\BasicShopifyAPI\Middleware;
 
 use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
-use Gnikyt\BasicShopifyAPI\Traits\IsResponseType;
-use Gnikyt\BasicShopifyAPI\Traits\ResponseTransform;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Gnikyt\BasicShopifyAPI\Traits\{IsResponseType, ResponseTransform};
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
 /**
  * Update API limits for REST and GraphQL calls.
@@ -18,10 +16,6 @@ class UpdateApiLimits extends AbstractMiddleware
 
     /**
      * Run.
-     *
-     * @param callable $handler
-     *
-     * @return callable
      */
     public function __invoke(callable $handler): callable
     {
@@ -46,10 +40,6 @@ class UpdateApiLimits extends AbstractMiddleware
 
     /**
      * Update the GraphQL costs.
-     *
-     * @param ResponseInterface $response
-     *
-     * @return void
      */
     protected function updateGraphCosts(ResponseInterface $response): void
     {
@@ -85,10 +75,6 @@ class UpdateApiLimits extends AbstractMiddleware
 
     /**
      * Updates the REST API call limits from Shopify headers.
-     *
-     * @param ResponseInterface $response
-     *
-     * @return void
      */
     protected function updateRestLimits(ResponseInterface $response): void
     {

@@ -2,16 +2,8 @@
 
 namespace Gnikyt\BasicShopifyAPI\Clients;
 
-use Exception;
-use Gnikyt\BasicShopifyAPI\Contracts\ClientAware;
-use Gnikyt\BasicShopifyAPI\Contracts\LimitAccesser;
-use Gnikyt\BasicShopifyAPI\Contracts\Respondable;
-use Gnikyt\BasicShopifyAPI\Contracts\SessionAware;
-use Gnikyt\BasicShopifyAPI\Contracts\StateStorage;
-use Gnikyt\BasicShopifyAPI\Contracts\TimeAccesser;
-use Gnikyt\BasicShopifyAPI\Contracts\TimeDeferrer;
-use Gnikyt\BasicShopifyAPI\Options;
-use Gnikyt\BasicShopifyAPI\Session;
+use Gnikyt\BasicShopifyAPI\Contracts\{ClientAware, LimitAccesser, Respondable, SessionAware, StateStorage, TimeAccesser, TimeDeferrer};
+use Gnikyt\BasicShopifyAPI\{Options, Session};
 use Gnikyt\BasicShopifyAPI\Traits\ResponseTransform;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Uri;
@@ -68,9 +60,9 @@ abstract class AbstractClient implements TimeAccesser, SessionAware, LimitAccess
     /**
      * Setup.
      *
-     * @param StateStorage $tstore    The time store implementation.
-     * @param StateStorage $lstore    The limits store implementation.
-     * @param TimeDeferrer $tdeferrer The time deferrer implementation.
+     * @param StateStorage $tstore    the time store implementation
+     * @param StateStorage $lstore    the limits store implementation
+     * @param TimeDeferrer $tdeferrer the time deferrer implementation
      *
      * @return self
      */
@@ -81,86 +73,56 @@ abstract class AbstractClient implements TimeAccesser, SessionAware, LimitAccess
         $this->tdeferrer = $tdeferrer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBaseUri(): Uri
     {
         if ($this->session === null || $this->session->getShop() === null) {
             // Shop is required
-            throw new Exception('Shopify domain missing for API calls');
+            throw new \Exception('Shopify domain missing for API calls');
         }
 
         return new Uri("https://{$this->session->getShop()}");
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTimeDeferrer(): TimeDeferrer
     {
         return $this->tdeferrer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTimeStore(): StateStorage
     {
         return $this->tstore;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLimitStore(): StateStorage
     {
         return $this->lstore;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setSession(Session $session): void
     {
         $this->session = $session;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSession(): ?Session
     {
         return $this->session;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setClient(ClientInterface $client): void
     {
         $this->client = $client;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClient(): ClientInterface
     {
         return $this->client;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setOptions(Options $options): void
     {
         $this->options = $options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOptions(): Options
     {
         return $this->options;

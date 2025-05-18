@@ -10,9 +10,7 @@ trait IsRequestType
     /**
      * Determines if the request is to Graph API.
      *
-     * @param string $uri The request URI.
-     *
-     * @return bool
+     * @param string $uri the request URI
      */
     protected function isGraphRequest(string $uri): bool
     {
@@ -22,9 +20,7 @@ trait IsRequestType
     /**
      * Determines if the request is to REST API.
      *
-     * @param string $uri The request URI.
-     *
-     * @return bool
+     * @param string $uri the request URI
      */
     protected function isRestRequest(string $uri): bool
     {

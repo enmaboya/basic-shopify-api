@@ -9,8 +9,6 @@ interface LimitAccesser
 {
     /**
      * Get the limit store implementation.
-     *
-     * @return StateStorage
      */
     public function getLimitStore(): StateStorage;
 }

@@ -2,20 +2,16 @@
 
 namespace Gnikyt\BasicShopifyAPI;
 
-use ArrayAccess;
 use Countable;
 use Iterator;
-use JsonSerializable;
 
 /**
  * Response data object for accessing.
  */
-class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializable
+class ResponseAccess implements \ArrayAccess, \Iterator, \Countable, \JsonSerializable
 {
     /**
      * The response data.
-     *
-     * @var mixed
      */
     public $container;
 
@@ -29,7 +25,7 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
     /**
      * Setup resource.
      *
-     * @param mixed $data The data to use for source.
+     * @param mixed $data the data to use for source
      *
      * @return self
      */
@@ -40,10 +36,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Check if offset exists.
-     *
-     * @param mixed $offset
-     *
-     * @return bool
      */
     public function offsetExists($offset): bool
     {
@@ -52,10 +44,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Get the value by offset.
-     *
-     * @param mixed $offset
-     *
-     * @return mixed
      */
     public function offsetGet($offset): mixed
     {
@@ -72,11 +60,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Set a value by offset.
-     *
-     * @param mixed $offset
-     * @param mixed $value
-     *
-     * @return void
      */
     public function offsetSet($offset, $value): void
     {
@@ -85,10 +68,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Remove by offset.
-     *
-     * @param mixed $offset
-     *
-     * @return void
      */
     public function offsetUnset($offset): void
     {
@@ -99,8 +78,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
      * Check if key exists in data.
      *
      * @param string $key
-     *
-     * @return bool
      */
     public function __isset($key): bool
     {
@@ -112,8 +89,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
      * $response->shop->name will forward to $response['shop']['name'].
      *
      * @param string $key
-     *
-     * @return mixed
      */
     public function __get($key)
     {
@@ -128,9 +103,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
      * Set to array.
      *
      * @param string $key
-     * @param mixed  $value
-     *
-     * @return void
      */
     public function __set($key, $value): void
     {
@@ -139,8 +111,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Rewind iterator.
-     *
-     * @return void
      */
     public function rewind(): void
     {
@@ -149,8 +119,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Get current position data.
-     *
-     * @return mixed
      */
     public function current(): mixed
     {
@@ -163,8 +131,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Current position.
-     *
-     * @return int
      */
     public function key(): int
     {
@@ -173,18 +139,14 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Move position forward.
-     *
-     * @return void
      */
     public function next(): void
     {
-        $this->position++;
+        ++$this->position;
     }
 
     /**
      * Check if valid iterator.
-     *
-     * @return bool
      */
     public function valid(): bool
     {
@@ -193,8 +155,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Countable.
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -203,8 +163,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Get keys for the array.
-     *
-     * @return array
      */
     public function keys(): array
     {
@@ -213,8 +171,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Get values for the array.
-     *
-     * @return array
      */
     public function values(): array
     {
@@ -223,8 +179,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Return a JSON serializable array.
-     *
-     * @return array
      */
     public function jsonSerialize(): array
     {
@@ -233,8 +187,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * To array, mainly for Laravel usage.
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -243,8 +195,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Check if errors are in response.
-     *
-     * @return bool
      */
     public function hasErrors(): bool
     {
@@ -253,8 +203,6 @@ class ResponseAccess implements ArrayAccess, Iterator, Countable, JsonSerializab
 
     /**
      * Get the errors.
-     *
-     * @return mixed
      */
     public function getErrors()
     {

@@ -12,8 +12,6 @@ interface Respondable
 {
     /**
      * Convert request response to response object.
-     *
-     * @return ResponseAccess
      */
     public function toResponse(StreamInterface $body): ResponseAccess;
 }
