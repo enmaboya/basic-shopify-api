@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Test;
 
 use Exception;

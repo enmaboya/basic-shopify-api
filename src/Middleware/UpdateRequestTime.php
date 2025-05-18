@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Middleware;
 
 use Gnikyt\BasicShopifyAPI\Traits\IsRequestType;

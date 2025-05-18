@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI;
 
 use Closure;
@@ -377,7 +379,7 @@ class BasicShopifyAPI implements SessionAware, ClientAware
                     $value = '["'.implode('", "', $value).'"]';
                 }
             }
-            
+
             ksort($params);
 
             // Encode and hash the params (without HMAC), add the API secret, and compare to the HMAC from params

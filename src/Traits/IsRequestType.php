@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Traits;
+
+use Psr\Http\Message\UriInterface;
 
 /**
  * Determine GraphQL or REST request type.
@@ -9,24 +13,16 @@ trait IsRequestType
 {
     /**
      * Determines if the request is to Graph API.
-     *
-     * @param string $uri The request URI.
-     *
-     * @return bool
      */
-    protected function isGraphRequest(string $uri): bool
+    protected function isGraphRequest(UriInterface $uri): bool
     {
-        return strpos($uri, 'graphql.json') !== false;
+        return strpos($uri->getPath(), 'graphql.json') !== false;
     }
 
     /**
      * Determines if the request is to REST API.
-     *
-     * @param string $uri The request URI.
-     *
-     * @return bool
      */
-    protected function isRestRequest(string $uri): bool
+    protected function isRestRequest(UriInterface $uri): bool
     {
         return $this->isGraphRequest($uri) === false;
     }

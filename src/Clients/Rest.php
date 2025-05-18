@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Clients;
 
 use Exception;
@@ -112,7 +114,7 @@ class Rest extends AbstractClient implements RestRequester
         $guzzleParams = [];
         if ($params !== null) {
             $keys = array_keys($params);
-            if (isset($keys[0]) && in_array($keys[0], ['query', 'json'])) {
+            if (isset($keys[0]) && in_array($keys[0], ['query', 'json'], true)) {
                 // Inputted type
                 $guzzleParams = $params;
             } else {

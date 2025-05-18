@@ -4,8 +4,10 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $rules = [
-    '@PSR2' => true,
-    '@PSR12' => true,
+    '@PER-CS2.0' => true,
+    '@PER-CS2.0:risky' => true,
+    'declare_strict_types' => true,
+    'strict_param' => true,
     'array_syntax' => [
         'syntax' => 'short',
     ],

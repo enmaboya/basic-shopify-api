@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Test\Clients;
 
 use Exception;
@@ -44,9 +46,9 @@ class RestTest extends BaseTest
                 200,
                 [
                     'http_x_shopify_shop_api_call_limit' => '1/80',
-                    'link' => '<https://example.myshopify.com/admin/api/unstable/products.json?page_info='.$pageInfo.'>; rel="next"',
+                    'link' => '<https://example.myshopify.com/admin/api/unstable/products.json?page_info=' . $pageInfo . '>; rel="next"',
                 ],
-                file_get_contents(__DIR__.'/../fixtures/rest/admin__shop.json')
+                file_get_contents(__DIR__ . '/../fixtures/rest/admin__shop.json')
             ),
         ];
 
@@ -71,7 +73,7 @@ class RestTest extends BaseTest
             new GuzzleResponse(
                 200,
                 [],
-                file_get_contents(__DIR__.'/../fixtures/admin__oauth__access_token.json')
+                file_get_contents(__DIR__ . '/../fixtures/admin__oauth__access_token.json')
             ),
         ];
 
@@ -87,9 +89,6 @@ class RestTest extends BaseTest
         // Request access
         $code = '!@#';
         $result = $api->requestAccessToken($code);
-        /** @var \GuzzleHttp\Handler\MockHandler $handler */
-        $handler = $api->getOptions()->getGuzzleHandler();
-        $data = json_decode($handler->getLastRequest()->getBody(), true);
 
         $this->assertSame('f85632530bf277ec9ac6f649fc327f17', $result);
     }
@@ -110,7 +109,7 @@ class RestTest extends BaseTest
             new GuzzleResponse(
                 200,
                 [],
-                file_get_contents(__DIR__.'/../fixtures/admin__oauth__access_token__grant.json')
+                file_get_contents(__DIR__ . '/../fixtures/admin__oauth__access_token__grant.json')
             ),
         ];
 
@@ -176,7 +175,7 @@ class RestTest extends BaseTest
             new GuzzleResponse(
                 200,
                 ['http_x_shopify_shop_api_call_limit' => '2/80'],
-                file_get_contents(__DIR__.'/../fixtures/rest/admin__shop.json')
+                file_get_contents(__DIR__ . '/../fixtures/rest/admin__shop.json')
             ),
         ];
 
@@ -210,7 +209,7 @@ class RestTest extends BaseTest
             new GuzzleResponse(
                 200,
                 [],
-                file_get_contents(__DIR__.'/../fixtures/rest/admin__shop.json')
+                file_get_contents(__DIR__ . '/../fixtures/rest/admin__shop.json')
             ),
         ];
 
@@ -236,7 +235,7 @@ class RestTest extends BaseTest
             new GuzzleResponse(
                 404,
                 ['http_x_shopify_shop_api_call_limit' => '2/80'],
-                file_get_contents(__DIR__.'/../fixtures/rest/admin__shop_oops.json')
+                file_get_contents(__DIR__ . '/../fixtures/rest/admin__shop_oops.json')
             ),
         ];
 
@@ -286,7 +285,7 @@ class RestTest extends BaseTest
             new GuzzleResponse(
                 200,
                 ['http_x_shopify_shop_api_call_limit' => '2/80'],
-                file_get_contents(__DIR__.'/../fixtures/rest/admin__shop.json')
+                file_get_contents(__DIR__ . '/../fixtures/rest/admin__shop.json')
             ),
         ];
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Test\Traits;
 
 use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
@@ -14,7 +16,7 @@ class IsResponseTypeTest extends BaseTest
     public function test(): void
     {
         // Create anon class
-        $klass = new class() {
+        $klass = new class {
             use IsResponseType;
 
             private $self;

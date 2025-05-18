@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Test\Middleware;
 
 use Gnikyt\BasicShopifyAPI\Middleware\UpdateRequestTime;
@@ -27,8 +29,7 @@ class UpdateRequestTimeTest extends BaseTest
 
         // Run a request
         $mw(
-            function (RequestInterface $request, array $options): void {
-            }
+            function (RequestInterface $request, array $options): void {}
         )(new Request('GET', '/admin/shop.json'), []);
 
         // Check we have timestamp now

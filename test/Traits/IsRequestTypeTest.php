@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Test\Traits;
 
 use Gnikyt\BasicShopifyAPI\Test\BaseTest;
 use Gnikyt\BasicShopifyAPI\Traits\IsRequestType;
+use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 
 class IsRequestTypeTest extends BaseTest
@@ -11,7 +14,7 @@ class IsRequestTypeTest extends BaseTest
     public function test(): void
     {
         // Create anon class
-        $klass = new class() {
+        $klass = new class {
             use IsRequestType;
 
             private $self;
@@ -23,14 +26,14 @@ class IsRequestTypeTest extends BaseTest
 
             public function testGraph(): void
             {
-                $this->self->assertTrue($this->isGraphRequest('/admin/api/graphql.json'));
-                $this->self->assertFalse($this->isGraphRequest('/admin/api/unstable/shop.json'));
+                $this->self->assertTrue($this->isGraphRequest(new Uri('/admin/api/graphql.json')));
+                $this->self->assertFalse($this->isGraphRequest(new Uri('/admin/api/unstable/shop.json')));
             }
 
             public function testRest(): void
             {
-                $this->self->assertFalse($this->isRestRequest('/admin/api/graphql.json'));
-                $this->self->assertTrue($this->isRestRequest('/admin/api/unstable/shop.json'));
+                $this->self->assertFalse($this->isRestRequest(new Uri('/admin/api/graphql.json')));
+                $this->self->assertTrue($this->isRestRequest(new Uri('/admin/api/unstable/shop.json')));
             }
         };
 
