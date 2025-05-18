@@ -7,7 +7,7 @@ return (new PhpCsFixer\Config())
     ->setRules([
         '@PER-CS2.0' => true,
         '@PER-CS2.0:risky' => true,
-        // 'declare_strict_types' => true,
+        'declare_strict_types' => true,
         'strict_param' => true,
         'align_multiline_comment' => true,
         'array_syntax' => [

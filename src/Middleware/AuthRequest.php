@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Middleware;
 
 use Gnikyt\BasicShopifyAPI\{BasicShopifyAPI, Options};
 use Gnikyt\BasicShopifyAPI\Traits\IsRequestType;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Ensures we have the proper request for private and public calls.
@@ -32,8 +35,8 @@ class AuthRequest extends AbstractMiddleware
             $apiPassword = $self->api->getOptions()->getApiPassword();
             $accessToken = $self->api->getSession()->getAccessToken();
 
-            if ($self->isAuthableRequest((string) $uri)) {
-                if ($self->isRestRequest((string) $uri)) {
+            if ($self->isAuthableRequest($uri)) {
+                if ($self->isRestRequest($uri)) {
                     // Checks for REST
                     if ($isPrivate && ($apiKey === null || $apiPassword === null)) {
                         // Key and password are required for private API calls
@@ -72,7 +75,7 @@ class AuthRequest extends AbstractMiddleware
             $uri = $request->getUri();
             $request = $request->withUri(
                 $uri->withPath(
-                    $this->versionPath($uri->getPath())
+                    $this->versionPath($uri)
                 )
             );
 
@@ -83,46 +86,43 @@ class AuthRequest extends AbstractMiddleware
     /**
      * Determines if the request requires auth headers.
      *
-     * @param string $uri the request URI
-     */
-    protected function isAuthableRequest(string $uri): bool
+     *
+     * */
+    protected function isAuthableRequest(UriInterface $uri): bool
     {
-        return preg_match('/\/admin\/oauth\/(authorize|access_token)/', $uri) === 0;
+        return preg_match('/\/admin\/oauth\/(authorize|access_token)/', $uri->getPath()) === 0;
     }
 
     /**
      * Versions the API call with the set version.
-     *
-     * @param string $uri the request URI
      */
-    protected function versionPath(string $uri): string
+    protected function versionPath(UriInterface $uri): string
     {
         $version = $this->api->getOptions()->getVersion();
-        if ($version === null
-            || preg_match(Options::VERSION_PATTERN, $uri)
+        if (
+            $version === null
+            || preg_match(Options::VERSION_PATTERN, $uri->getPath())
             || !$this->isAuthableRequest($uri)
             || !$this->isVersionableRequest($uri)
         ) {
             // No version set, or already versioned... nothing to do
-            return $uri;
+            return $uri->getPath();
         }
 
         // Graph request
         if ($this->isGraphRequest($uri)) {
-            return str_replace('/admin/api', "/admin/api/{$version}", $uri);
+            return str_replace('/admin/api', "/admin/api/{$version}", $uri->getPath());
         }
 
         // REST request
-        return preg_replace('/\/admin(\/api)?\//', "/admin/api/{$version}/", $uri);
+        return preg_replace('/\/admin(\/api)?\//', "/admin/api/{$version}/", $uri->getPath());
     }
 
     /**
      * Determines if the request requires versioning.
-     *
-     * @param string $uri the request URI
      */
-    protected function isVersionableRequest(string $uri): bool
+    protected function isVersionableRequest(UriInterface $uri): bool
     {
-        return preg_match('/\/admin\/(oauth\/access_scopes)/', $uri) === 0;
+        return preg_match('/\/admin\/(oauth\/access_scopes)/', $uri->getPath()) === 0;
     }
 }

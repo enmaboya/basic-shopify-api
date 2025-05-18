@@ -14,6 +14,10 @@
         {
             "name": "Tyler King",
             "email": "tyler.n.king@gmail.com"
+        },
+        {
+            "name": "Vitaliy Dubov",
+            "email": "i@vdubov.ru"
         }
     ],
     "support": {
@@ -30,7 +34,8 @@
         "ergebnis/composer-normalize": "^2.47",
         "friendsofphp/php-cs-fixer": "^3.75",
         "phpstan/phpstan": "^0.12.100",
-        "phpunit/phpunit": "^10.5.46"
+        "phpunit/phpunit": "^10.5.46",
+        "symfony/var-dumper": "^7.2"
     },
     "autoload": {
         "psr-4": {

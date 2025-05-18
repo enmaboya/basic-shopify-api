@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Middleware;
 
 use Gnikyt\BasicShopifyAPI\Traits\IsRequestType;
@@ -22,6 +24,7 @@ class UpdateRequestTime extends AbstractMiddleware
         return function (RequestInterface $request, array $options) use ($self, $handler) {
             // Get the client
             $api = $self->api;
+
             $client = $self->isRestRequest($request->getUri()) ?
                 $api->getRestClient() :
                 $api->getGraphClient();

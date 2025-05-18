@@ -12,13 +12,13 @@ class ResponseTransformTest extends BaseTest
     public function test(): void
     {
         // Create a response to use for body stream
-        $response = new Response(200, [], file_get_contents(__DIR__.'/../fixtures/rest/admin__shop.json'));
+        $response = new Response(200, [], file_get_contents(__DIR__ . '/../fixtures/rest/admin__shop.json'));
 
         // Create a anon class
-        $kclass = new class() {
+        $class = new class() {
             use ResponseTransform;
         };
-        $result = $kclass->toResponse($response->getBody());
+        $result = $class->toResponse($response->getBody());
 
         $this->assertInstanceOf(ResponseAccess::class, $result);
     }

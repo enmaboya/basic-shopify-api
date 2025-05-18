@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Gnikyt\BasicShopifyAPI\Clients;
 
 use Gnikyt\BasicShopifyAPI\Contracts\{ClientAware, LimitAccesser, Respondable, SessionAware, StateStorage, TimeAccesser, TimeDeferrer};

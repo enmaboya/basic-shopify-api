@@ -14,7 +14,7 @@ class IsResponseTypeTest extends BaseTest
     public function test(): void
     {
         // Create anon class
-        $klass = new class() {
+        $class = new class() {
             use IsResponseType;
 
             private $self;
@@ -35,8 +35,8 @@ class IsResponseTypeTest extends BaseTest
             }
         };
 
-        $klass->setSelf($this);
-        $klass->testGraph(new Response());
-        $klass->testRest(new Response(200, [BasicShopifyAPI::HEADER_REST_API_LIMITS => '39/40']));
+        $class->setSelf($this);
+        $class->testGraph(new Response());
+        $class->testRest(new Response(200, [BasicShopifyAPI::HEADER_REST_API_LIMITS => '39/40']));
     }
 }
